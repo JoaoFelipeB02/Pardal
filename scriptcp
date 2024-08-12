@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Variáveis
+name="Bertini"
+course="Cybersecurity"
+directories=("Networking" "Arquitetura" "Hardware" "Python" "Windows" "Linux" "Segurança" "HackerMind" )
+msg="Bem vindo"
+
+# Estrutura 
+mkdir -p "name/$course"
+
+for dir in "${directories[@]}"; do
+    mkdir -p "$name/$course/$dir"
+    echo "$msg" > "$name/$course/$dir/msg.txt"
+done
+
+echo "Directories structure successfully generated."
