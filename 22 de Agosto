@@ -1,0 +1,35 @@
+import requests
+
+def brute_force_directories(url, wordlist):
+    found_paths = []
+
+    with open(wordlist, 'r') as file:
+        paths = file.read().splitlines()
+
+    for path in paths:
+        full_url = f"{url}/{path}"
+        try:
+            response = requests.get(full_url)
+            if response.status_code == 200:
+                print(f"Found: {full_url}")
+                found_paths.append(full_url)
+            elif response.status_code == 403:
+                print(f"Forbidden: {full_url} (but it exists!)")
+                found_paths.append(full_url)
+        except requests.exceptions.RequestException as e:
+            print(f"Error with {full_url}: {e}")
+
+    return found_paths
+
+# Exemplo de uso
+site_url = 'https://www2.fiap.com.br/'  # Substitua pelo URL do site que deseja enumerar
+wordlist_path = 'wordlist.txt'  # Substitua pelo caminho do arquivo de wordlist
+
+found = brute_force_directories(site_url, wordlist_path)
+
+if found:
+    print("\nDiretórios e arquivos encontrados:")
+    for path in found:
+        print(path)
+else:
+    print("\nNenhum diretório ou arquivo encontrado.")
